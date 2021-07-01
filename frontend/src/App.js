@@ -21,7 +21,7 @@ class App extends React.Component {
    fetchPhotos=async (e)=> {
     e.preventDefault() 
      this.setState({isLoading:true})  
-      const{data}= await axios.get(`http://127.0.0.1:4000/api/v1/album/${this.state.albumId}`);
+      const{data}= await axios.get(`http://127.0.0.1:5000/api/v1/album/${this.state.albumId}`);
       return(data.status === 200)?this.setState(({photos: data.photos, isLoading:false})):this.setState(({message:data.message, isLoading:false}))
   }
 render() {
