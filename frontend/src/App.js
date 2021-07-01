@@ -1,49 +1,30 @@
 import React from 'react'
 import axios from 'axios'
+import { Photos } from './components/Photos'
 class App extends React.Component {
 
   state = {
        albumId:null,
-       title:'',
-       thumbnailUrl:'',
+       photos:[],
        isLoading: false,
        message:''
   }
-  changeAlbumId(e){
-
-
-    alert(e.target.value)
-    // e.preventDefault()
-
+   changeAlbumId=(e)=>{
+    e.preventDefault()
     this.setState(()=>({
-      albumId: e.target.value
+      albumId: e.target.value,
+      photos:[],
+      message:''
     }))
   }
-   fetchPhotos(e) {
-    e.preventDefault()
-
-   const albumId =this.state.albumId 
-   
-   alert('hi')
-   /*
-   if(albumId){
-      const data = async()=>await axios.get(`127.0.0.1:5000/api/v1/album/${albumId}`)
-      if(data.status === 200){
-        const {title, thumbnailUrl} = data
-        this.setState(()=>({
-          thumbnailUrl,
-          title
-        }))
-      } else{
-        this.setState(()=>({
-          message:data.message
-        }))
-      }
-   }
-   */
+   fetchPhotos=async (e)=> {
+    e.preventDefault()   
+      const{data}= await axios.get(`http://127.0.0.1:4000/api/v1/album/${this.state.albumId}`);
+      return(data.status === 200)?this.setState(({photos: data.photos})):this.setState(({message:data.message}))
   }
 render() {
-  const {title, thumbnailUrl,albumId} = this.state
+  
+  const {photos, albumId, message} = this.state
   return (<>
     <header>
       <h1 className="logo">ZeroTo100</h1>
@@ -56,16 +37,10 @@ render() {
           <path fill="#00cba9" fillOpacity="1" d="M0,32L80,64C160,96,320,160,480,154.7C640,149,800,75,960,64C1120,53,1280,107,1360,133.3L1440,160L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
         </svg>
     <main>
-      <div className="photo">
-        <div style={{background:thumbnailUrl}}>
- 
-        </div>
-        <div>{title}</div>
-      </div>
-
+      <Photos photos={photos} message={message}/>
     </main>
     <footer>
-      jui
+      
     </footer>
   </>
 );
