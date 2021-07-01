@@ -5,16 +5,10 @@
 
 }
 body, html{margin:0}
-footer{
-  background:var(--glass);
-  position: fixed;
-  padding: 10px 10px 0px 10px;
-  bottom: 0;
-  width: 100%;
-  /* Height of the footer*/ 
-  height: 40px;
-
-
+.loader,.message{
+ color: var(--color-primary);
+ font-size: 64px;
+ height: 100vh;
 }
 header{
   background:var(--color-secondary);
